@@ -1,40 +1,14 @@
 
 
-document.body.innerHTML += "<div class='box'>tree</div>"
+const timePromise = () =>
+new Promise((resolve, reject) =>
+setTimeout(() => resolve(), 2000))
 
-function test (n) {
-
-  if(n === 1){
-    return n
-  }
-  console.log(n);
-  setTimeout(() => {
-      test(n - 1)
-  }, 0)
+const asyncFn = async () => {
+  await timePromise()
+  document.body.innerHTML += "<div class='box'>first</div>"
+  await timePromise()
+  document.body.innerHTML += "<div class='box2'>!first</div>"
 }
 
-// test(100000)
-
-function testMicroTask(n){
-  if(n === 0){
-    return n
-  }
-
-  Promise.resolve().then(() => {
-    testMicroTask(n - 1)
-  })
-}
-
-
-
-console.log("start");
-
-setTimeout(() => {
-  console.log("task");
-}, 0)
-
-Promise.resolve().then(() => {
-  console.log("Microtask");
-})
-
-console.log("end");
+asyncFn()
